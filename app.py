@@ -1,44 +1,25 @@
 import streamlit as st
-import pandas as pd
-import numpy as np
-import plotly_express as px
 
-st.markdown("<h1 style='text-align: left; color: green;'>Club and Nationality App</h1>", unsafe_allow_html=True)
-st.write("")
-
-@st.cache
-def load_data():
-	df = pd.read_csv("football_data.csv")
-	df.drop(['Unnamed: 0', 'ID'], axis = 1, inplace=True)
-	return df
-
-if st.checkbox("Select this checkbox to look at the data"):
-	st.write(load_data())
-
-df = load_data()
-
-clubs = st.sidebar.multiselect('Select Players for clubs', df['Club'].unique())
-nationalities = st.sidebar.multiselect('Select Players from Nationalities', df['Nationality'].unique())
-
-new_df = df[(df['Club'].isin(clubs)) & (df['Nationality'].isin(nationalities))]
-
-
-if clubs and nationalities is not None:
-	if len(new_df) != 0:
-		st.write("Summary of the selected combination of club and nationality:")
-		st.write(new_df)
-		st.write("Simple chart between player age and overall age of all the players")
-		fig = px.scatter(new_df, x ='Overall',y='Age', color='Name')
-		st.plotly_chart(fig)
-	else:
-		# st.markdown("### No player with that combination was found!!!")
-		st.markdown(
-		"""
-
-		This very simple webapp allows you to select and visualize players from certain clubs and certain nationalities
-
-		👈 Select one or more clubs and nationalities
-
-		"""
-		)
-
+def main():
+    st.title("简单的测试网页")
+    
+    # 在页面上添加文本
+    st.write("欢迎使用简单的测试网页！")
+    
+    # 添加一个输入框，接收用户的输入
+    user_input = st.text_input("请输入一些文本：")
+    
+    # 当用户输入时，显示用户输入的内容
+    if user_input:
+        st.write("你输入的内容是:", user_input)
+    
+    # 添加一个滑动条，接收用户的选择
+    slider_value = st.slider("选择一个值：", 0, 100, 50)
+    st.write("你选择的值是:", slider_value)
+    
+    # 添加一个按钮，点击按钮时执行操作
+    if st.button("点击我！"):
+        st.write("你点击了按钮！")
+    
+if __name__ == "__main__":
+    main()
